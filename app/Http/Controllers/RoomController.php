@@ -18,7 +18,7 @@ class RoomController extends Controller
         $inviting=MobileUser::find($data['user_id']);
 
         foreach($data['members'] as $member){
-            $user=MobileUser::find($member->id);
+            $user=MobileUser::where('login', $member->login)->first();
             broadcast(new RequestChannelEvent($inviting,$user, $room ));
             $user->rooms_invited()->attach($room->id);
             $room->users_invited()->attach($user->id);

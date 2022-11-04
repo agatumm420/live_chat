@@ -14,16 +14,13 @@ class CreateMobileUsersTable extends Migration
     public function up()
     {
         Schema::create('mobile_users', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrement('id');
             $table->string('name');
             $table->string('login');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->bigInteger('room_id')->nullable();
-              $table->foreign('room_id')
-                ->references('id')
-                ->on('rooms')->onDelete('cascade');
+
             $table->rememberToken();
             $table->string('image')->nullable();
             $table->timestamps();
