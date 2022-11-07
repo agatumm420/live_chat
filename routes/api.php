@@ -25,3 +25,5 @@ Route::post('/create_room', [RoomController::class, 'create_room']);
 Route::post('/accept_room', [RoomController::class, 'accept_room_invitation']);
 Route::post('/register', [MobileUserController::class, 'register']);
 Route::post('/update', [MobileUserController::class, 'update']);
+Route::get('/rooms/{user}', [MobileUserController::class, 'user_rooms']);
+Route::post('/login', [MobileUserController::class, 'login']);

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\MobileUser;
 use App\Exceptions\EmailTakenException;
 use App\Exceptions\NoUserException;
+use App\Exceptions\PasswordNotMatch;
+
 
 class MobileUserController extends Controller
 {
@@ -57,7 +59,36 @@ class MobileUserController extends Controller
                 ]);
         }
         else{
-            throw new NoUserException('There is not a user with provided email');
+            throw new NoUserException('There is not a user with provided email',401);
         }
+    }
+    public function login(Request $request){
+        $data=$request->input('data');
+        if(MobileUser::where('email', $data['email'])->exists()){
+            $user=MobileUser::where('email', $data['email'])->first();
+            if($user->password==$data['password']){
+                return response()->json([
+                    'data'=>[
+                        'login'=>$user->login,
+                        'name'=>$user->name,
+                        'user_id'=>$user->id
+                    ]
+                ]);
+            }
+            else{
+                throw new PasswordNotMatch('Inncorect password', 401);
+            }
+        }
+        else{
+            throw new NoUserException('There is not a user with provided email',401);
+        }
+    }
+    public function user_rooms(MobileUser $user){
+        return response()->json([
+            'data'=>[
+                'user_id'=>$user->id,
+                'rooms'=>$user->rooms
+            ]
+        ]);
     }
 }
