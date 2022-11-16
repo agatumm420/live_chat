@@ -42,7 +42,7 @@ class MobileUser extends Model
     public function rooms(){
         return $this->belongsToMany(Room::class,'rooms_users', 'user_id', 'room_id' );
     }
-    public function roooms_invited(){
+    public function rooms_invited(){
         return $this->belongsToMany(Room::class,'rooms_users_invited', 'user_id', 'room_id' );
     }
 

@@ -30,9 +30,10 @@ class RequestChannelEvent implements ShouldBroadcast
         $this->user_inviting=$inviting;
         $this->user_invited=$invited;
         $this->room=$roomster;
+       // dd($inviting);
         $this->data=[
             'data'=>[
-                'invited_by'=>$this->user_invinting->login,
+                'invited_by'=>$this->user_inviting->login,
                 'room_id'=>$this->room->id,
                 'room_name'=>$this->room->name
 

@@ -33,17 +33,25 @@ class MessageSend implements ShouldBroadcast
     {
        // dd("i'm broadcasting");
         $this->room_id=$room->id;
-        $this->message_author=$message->user->login;
+        $this->message_author;
+        $message->generic?null:$this->message_author=$message->user->login;
+        //=$message->user->login;
         $this->message_text=$message->text;
+        $this->data;
        // dd($this->message_text);
         $this->date=Carbon::now()->toTimeString();
-        $this->data=[
+        $message->generic? $this->data=[
+            'room'=>$this->room_id,
+            'text'=>$this->message_text,
+            'date'=>$this->date,
+        ]:$this->data=[
             'room'=>$this->room_id,
             'user'=>$this->message_author,
             'text'=>$this->message_text,
             'date'=>$this->date,
-            'is_generic'=>$message->generic,
+
         ];
+
     }
     public function broadcastAs(){
         return 'message.send';

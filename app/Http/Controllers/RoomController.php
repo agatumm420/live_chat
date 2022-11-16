@@ -3,23 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Modles\Room;
+use App\Models\Room;
 use App\Models\MobileUser;
 use App\Models\Message;
 use App\Events\RequestChannelEvent;
 use App\Events\MessageSend;
 class RoomController extends Controller
 {
-    public function create_room(Request $request){
+    public function create_room(Request $request, MobileUser $mobile_user){
         $data=$request->input('data');
 
-        $room=Room::firstOrNew(['name'=>$data['name'], 'admin'=>$data['user_id']]);
-
-        $inviting=MobileUser::find($data['user_id']);
+        $room=Room::firstOrNew(['name'=>$data['name'], 'admin'=>$mobile_user->id]);
+        //dd($room);
+        $room->name=$data['name'];
+        $room->admin=$mobile_user->id;
+        if($data['image']){
+            $room->image=$data['image'];
+        }
+        $room->save();
+        $mobile_user->rooms()->attach($room->id);
+        $room->save();
+        $inviting=$mobile_user;
 
         foreach($data['members'] as $member){
+            //dd($member->login);
             $user=MobileUser::where('login', $member->login)->first();
-            broadcast(new RequestChannelEvent($inviting,$user, $room ));
+            //dd($mobile_user);
+            broadcast(new RequestChannelEvent($mobile_user, $user, $room ));
             $user->rooms_invited()->attach($room->id);
             $room->users_invited()->attach($user->id);
             $msg=Message::create([

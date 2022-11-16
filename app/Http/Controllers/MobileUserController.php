@@ -13,6 +13,7 @@ class MobileUserController extends Controller
 {
     public function register(Request $request){
         $data=$request->input('data');
+       // dd($request);
         if(MobileUser::where('email', $data['email'])->exists()){
             throw new EmailTakenException('This email is taken', 401);
         }
@@ -41,6 +42,7 @@ class MobileUserController extends Controller
         $data=$request->input('data');
         if(MobileUser::where('email', $data['email'])->exists()){
             $user=MobileUser::firstOrNew(['email'=>$data['email']]);
+            //dd()
             // // $table->string('name');
             // $table->string('login');
             // $table->string('email')->unique();
@@ -70,7 +72,7 @@ class MobileUserController extends Controller
                 return response()->json([
                     'data'=>[
                         'login'=>$user->login,
-                        'name'=>$user->name,
+
                         'user_id'=>$user->id
                     ]
                 ]);
