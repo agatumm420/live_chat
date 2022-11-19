@@ -27,3 +27,4 @@ Route::post('/register', [MobileUserController::class, 'register']);
 Route::post('/update', [MobileUserController::class, 'update']);
 Route::get('/rooms/{user}', [MobileUserController::class, 'user_rooms']);
 Route::post('/login', [MobileUserController::class, 'login']);
+Route::get('/room/{room}', [RoomController::class, 'get_room']);

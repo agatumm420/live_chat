@@ -14,19 +14,19 @@ class MessageTest extends TestCase
      *
      * @return void
      */
-    // public function test_send()
-    // {
-    //     $user=User::find(1);
+    public function test_send()
+    {
+        $user=User::find(1);
 
-    //     $response = $this->post('http://127.0.0.1:8000/api/send/1', [
-    //         'data'=>[
-    //             'text'=>'hello, world',
-    //             'user_id'=>1
-    //         ]
-    //     ]);
-    //    // dd($response);
-    //     $response->assertStatus(200);
-    // }
+        $response = $this->post('http://127.0.0.1:8000/api/send/3', [
+            'data'=>[
+                'text'=>'Lets get down to buissness',
+                'user_id'=>4
+            ]
+        ]);
+       // dd($response);
+        $response->assertStatus(200);
+    }
     // public function test_testy()
     // {
     //     $user=User::find(1);

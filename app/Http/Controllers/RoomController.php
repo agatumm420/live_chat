@@ -8,6 +8,7 @@ use App\Models\MobileUser;
 use App\Models\Message;
 use App\Events\RequestChannelEvent;
 use App\Events\MessageSend;
+use App\Http\Resources\MessageCollectionResource;
 class RoomController extends Controller
 {
     public function create_room(Request $request, MobileUser $mobile_user){
@@ -66,5 +67,14 @@ class RoomController extends Controller
                  'room_name'=>$room->name,
                  'new_chatter'=>$user->id,
             ]]);
+    }
+    public function get_room(Room $room){
+        // return response()->json([
+        //     'data'=>[
+        //         'room_id'=>$room->id,
+        //         'messages'=>$room->messages
+        //     ]
+        // ]);
+        return new MessageCollectionResource($room->messages);
     }
 }

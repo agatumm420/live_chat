@@ -57,10 +57,10 @@ class MobileUserTest extends TestCase
                 ]);
                 $response->assertStatus(200);
     }
-    public function test_rooms(){
-        $response = $this->get('http://127.0.0.1:8000/api/rooms/3'
-        );
-        //dd($response);
-        $response->assertStatus(200);
-    }
+    // public function test_rooms(){
+    //     $response = $this->get('http://127.0.0.1:8000/api/rooms/3'
+    //     );
+    //     //dd($response);
+    //     $response->assertStatus(200);
+    // }
 }

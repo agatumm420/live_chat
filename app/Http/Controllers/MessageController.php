@@ -16,6 +16,7 @@ class MessageController extends Controller
         // $message->user_id=$data['user_id'];
         // $message->room_id=$room->id;
         $message->save();
+        $room->messages()->attach($message->id);
         broadcast(new MessageSend($room, $message));
         return response()->json([
             'status'=>'succces'
